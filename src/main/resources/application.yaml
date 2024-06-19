@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: CarSellerBot
+  datasource:
+    url: jdbc:postgresql://localhost:5432/carseller
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+bot:
+  name: CarSellerTest_bot
+  token: 7478437592:AAGHH4bWvOOA60rWNQTlyulsKF_SflCSfzY
