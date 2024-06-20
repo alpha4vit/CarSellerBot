@@ -23,4 +23,9 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewEntity> getAll() {
         return reviewRepository.findAll();
     }
+
+    @Override
+    public Long getAllCount() {
+        return reviewRepository.findCount();
+    }
 }

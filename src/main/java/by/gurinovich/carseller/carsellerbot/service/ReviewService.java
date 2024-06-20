@@ -10,4 +10,6 @@ public interface ReviewService {
 
     List<ReviewEntity> getAll();
 
+    Long getAllCount();
+
 }

@@ -2,7 +2,6 @@ package by.gurinovich.carseller.carsellerbot.config;
 
 import by.gurinovich.carseller.carsellerbot.bot.CarSellerBot;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;

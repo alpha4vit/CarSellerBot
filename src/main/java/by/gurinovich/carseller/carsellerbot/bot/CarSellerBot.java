@@ -36,4 +36,5 @@ public class CarSellerBot extends TelegramLongPollingBot {
     public String getBotToken() {
         return botProperties.getToken();
     }
+
 }
