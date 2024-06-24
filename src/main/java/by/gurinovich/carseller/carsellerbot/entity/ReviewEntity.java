@@ -1,5 +1,6 @@
 package by.gurinovich.carseller.carsellerbot.entity;
 
+import by.gurinovich.carseller.carsellerbot.utils.enums.ReviewType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,5 +22,9 @@ public class ReviewEntity {
     private String value;
 
     private String videoId;
+
+    @Enumerated
+    @Column(name = "type")
+    private ReviewType reviewType;
 
 }

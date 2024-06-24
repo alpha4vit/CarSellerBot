@@ -17,3 +17,10 @@ create table if not exists users
     bot_state int         not null default 0,
     constraint unique_name_chat_id unique (chat_id, name)
 );
+
+--changeset roman_gurinovich:3
+truncate reviews;
+alter table reviews add column type int;
+
+--changeset roman_gurinovich:4
+alter table users add column review_num int;

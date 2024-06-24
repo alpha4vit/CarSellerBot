@@ -31,5 +31,8 @@ public class UserEntity {
     @Enumerated(value = EnumType.ORDINAL)
     private BotState botState;
 
+    @Column(name = "review_num")
+    private Long reviewNum;
+
 
 }

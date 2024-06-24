@@ -11,3 +11,5 @@ spring:
 bot:
   name: CarSellerTest_bot
   token: 7478437592:AAGHH4bWvOOA60rWNQTlyulsKF_SflCSfzY
+  reviews:
+    page-size: 1
