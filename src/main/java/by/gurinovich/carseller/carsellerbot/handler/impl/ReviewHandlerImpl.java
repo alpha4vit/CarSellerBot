@@ -13,17 +13,14 @@ import by.gurinovich.carseller.carsellerbot.utils.parsers.HTMLParser;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageMedia;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.media.InputMediaVideo;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
 @Slf4j
@@ -63,18 +60,17 @@ public class ReviewHandlerImpl implements ReviewHandler {
         var messageId = callbackQuery.getMessage().getMessageId();
         var page = 0L;
         switch (ReviewActions.valueOf(callbackQuery.getData())) {
-            case REVIEW_GET_BUTTON -> {
+            case REVIEW_GET_BUTTON ->
                 page = userService.resetActualReviewNum(chatId)
                         .getReviewNum();
-            }
-            case REVIEW_NEXT_BUTTON -> {
+            case REVIEW_NEXT_BUTTON ->
                 page = userService.incActualReviewNum(chatId)
                         .getReviewNum();
-            }
-            case REVIEW_PREVIOUS_BUTTON -> {
+
+            case REVIEW_PREVIOUS_BUTTON ->
                 page = userService.decActualReviewNum(chatId)
                         .getReviewNum();
-            }
+
         }
         var review = reviewService.getByPage(page)
                 .getContent().getFirst();

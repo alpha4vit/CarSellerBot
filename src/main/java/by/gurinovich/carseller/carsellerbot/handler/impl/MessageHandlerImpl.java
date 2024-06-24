@@ -5,7 +5,6 @@ import by.gurinovich.carseller.carsellerbot.handler.GlobalActionHandler;
 import by.gurinovich.carseller.carsellerbot.handler.MessageHandler;
 import by.gurinovich.carseller.carsellerbot.handler.ReviewHandler;
 import by.gurinovich.carseller.carsellerbot.keyboards.GlobalActionKeyboard;
-import by.gurinovich.carseller.carsellerbot.service.ReviewService;
 import by.gurinovich.carseller.carsellerbot.service.UserService;
 import by.gurinovich.carseller.carsellerbot.utils.enums.actions.GlobalActions;
 import by.gurinovich.carseller.carsellerbot.utils.enums.states.BotState;
@@ -15,10 +14,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.send.SendVideoNote;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
