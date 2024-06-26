@@ -32,6 +32,8 @@ public class MessageHandlerImpl implements MessageHandler {
     @Override
     @SneakyThrows
     public void handleMessage(AbsSender sender, Message message) {
+        if (message.getText() == null)
+            message.setText("");
         switch (message.getText()) {
             case "/start" -> {
                 var user = UserEntity.builder()
