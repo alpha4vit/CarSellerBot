@@ -25,6 +25,6 @@ public class CarModelEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_brand_id", referencedColumnName = "id")
-    private BrandEntity brand;
+    private CarBrandEntity brand;
 
 }

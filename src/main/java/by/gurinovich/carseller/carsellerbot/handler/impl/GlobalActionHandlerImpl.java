@@ -1,6 +1,7 @@
 package by.gurinovich.carseller.carsellerbot.handler.impl;
 
 import by.gurinovich.carseller.carsellerbot.handler.GlobalActionHandler;
+import by.gurinovich.carseller.carsellerbot.keyboards.CarActionKeyboardGenerator;
 import by.gurinovich.carseller.carsellerbot.keyboards.GlobalActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.keyboards.ReviewActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.service.ReviewService;
@@ -23,6 +24,7 @@ public class GlobalActionHandlerImpl implements GlobalActionHandler {
 
     private final HTMLParser htmlParser;
     private final ReviewService reviewService;
+    private final CarActionKeyboardGenerator carActionKeyboardGenerator;
 
     @Override
     @SneakyThrows
@@ -38,6 +40,17 @@ public class GlobalActionHandlerImpl implements GlobalActionHandler {
                         .text(message)
                         .parseMode("HTML")
                         .replyMarkup(GlobalActionKeyboard.actionChooseButtons())
+                        .build();
+                sender.executeAsync(messageResponse);
+            }
+            case GLOBAL_SEARCH -> {
+                var message = htmlParser.readHTML("src/main/resources/static/car/brandTab.html");
+                var messageResponse = EditMessageText.builder()
+                        .chatId(chatId)
+                        .messageId(messageId)
+                        .replyMarkup(carActionKeyboardGenerator.getBrandsMarkup())
+                        .text(message)
+                        .parseMode("HTML")
                         .build();
                 sender.executeAsync(messageResponse);
             }

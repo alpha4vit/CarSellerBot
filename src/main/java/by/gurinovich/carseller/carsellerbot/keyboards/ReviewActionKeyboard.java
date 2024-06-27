@@ -26,8 +26,8 @@ public class ReviewActionKeyboard {
     }
 
     public static InlineKeyboardMarkup slideButtons(){
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        List<InlineKeyboardButton> buttons = List.of(PREVIOUS_REVIEW_BUTTON, NEXT_REVIEW_BUTTON);
+        var inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        var buttons = List.of(PREVIOUS_REVIEW_BUTTON, NEXT_REVIEW_BUTTON);
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         keyboard.add(buttons);
         keyboard.add(List.of(GO_BACK_BUTTON));
@@ -36,8 +36,8 @@ public class ReviewActionKeyboard {
     }
 
     public static InlineKeyboardMarkup actionChooseButtons(){
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        List<InlineKeyboardButton> buttons = List.of(CREATE_REVIEW_BUTTON, GET_REVIEWS_BUTTON);
+        var inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        var buttons = List.of(CREATE_REVIEW_BUTTON, GET_REVIEWS_BUTTON);
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         buttons.forEach(el -> keyboard.add(List.of(el)));
         keyboard.add(List.of(MAIN_MENU_BUTTON));

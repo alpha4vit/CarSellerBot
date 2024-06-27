@@ -18,7 +18,7 @@ public class GlobalActionKeyboard {
     }
 
     public static InlineKeyboardMarkup actionChooseButtons(){
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        var inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<InlineKeyboardButton> buttons = List.of(SEARCH_BUTTON, REVIEWS_BUTTON);
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         buttons.forEach(el -> keyboard.add(List.of(el)));

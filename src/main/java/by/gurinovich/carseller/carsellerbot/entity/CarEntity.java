@@ -18,7 +18,7 @@ public class CarEntity {
 
     @ManyToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
-    private BrandEntity brand;
+    private CarBrandEntity brand;
 
     @ManyToOne
     @JoinColumn(name = "model_id", referencedColumnName = "id")

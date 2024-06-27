@@ -1,6 +1,7 @@
 package by.gurinovich.carseller.carsellerbot.handler.impl;
 
 import by.gurinovich.carseller.carsellerbot.handler.CallbackHandler;
+import by.gurinovich.carseller.carsellerbot.handler.CarHandler;
 import by.gurinovich.carseller.carsellerbot.handler.GlobalActionHandler;
 import by.gurinovich.carseller.carsellerbot.handler.ReviewHandler;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class CallbackHandlerImpl implements CallbackHandler {
 
     private final ReviewHandler reviewHandler;
     private final GlobalActionHandler globalActionHandler;
+    private final CarHandler carHandler;
 
     @Override
     public BotApiMethodMessage handleCallback(AbsSender sender, CallbackQuery callbackQuery) {
@@ -25,6 +27,8 @@ public class CallbackHandlerImpl implements CallbackHandler {
             reviewHandler.handleCallback(sender, callbackQuery);
         else if (callbackQuery.getData().startsWith("GLOBAL"))
             globalActionHandler.handleCallback(sender, callbackQuery);
+        else if (callbackQuery.getData().startsWith("CAR_BRAND"))
+            carHandler.handleCallback(sender, callbackQuery);
         return new SendMessage(callbackQuery.getMessage().getChatId().toString(), "callback");
     }
 }
