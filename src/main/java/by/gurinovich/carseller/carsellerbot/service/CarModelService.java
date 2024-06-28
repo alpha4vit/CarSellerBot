@@ -8,5 +8,5 @@ import java.util.List;
 public interface CarModelService {
     List<CarModelEntity> getAllOrderedByName();
 
-    List<CarModelEntity> getByBrandOrderedByName(CarBrandEntity brand);
+    List<CarModelEntity> getByBrandOrderedByName(Long page, CarBrandEntity brand);
 }

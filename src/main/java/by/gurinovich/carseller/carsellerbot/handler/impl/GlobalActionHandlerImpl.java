@@ -5,6 +5,7 @@ import by.gurinovich.carseller.carsellerbot.keyboards.CarActionKeyboardGenerator
 import by.gurinovich.carseller.carsellerbot.keyboards.GlobalActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.keyboards.ReviewActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.service.ReviewService;
+import by.gurinovich.carseller.carsellerbot.service.UserService;
 import by.gurinovich.carseller.carsellerbot.utils.enums.actions.GlobalActions;
 import by.gurinovich.carseller.carsellerbot.utils.parsers.HTMLParser;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,14 @@ public class GlobalActionHandlerImpl implements GlobalActionHandler {
     private final HTMLParser htmlParser;
     private final ReviewService reviewService;
     private final CarActionKeyboardGenerator carActionKeyboardGenerator;
+    private final UserService userService;
 
     @Override
     @SneakyThrows
     public void handleCallback(AbsSender sender, CallbackQuery callbackQuery) {
         var chatId = callbackQuery.getMessage().getChatId();
         var messageId = callbackQuery.getMessage().getMessageId();
+        var user = userService.getByChatId(chatId);
         switch (GlobalActions.valueOf(callbackQuery.getData())){
             case GLOBAL -> {
                 var message = htmlParser.readHTML("src/main/resources/static/preview.html");
@@ -48,7 +51,7 @@ public class GlobalActionHandlerImpl implements GlobalActionHandler {
                 var messageResponse = EditMessageText.builder()
                         .chatId(chatId)
                         .messageId(messageId)
-                        .replyMarkup(carActionKeyboardGenerator.getBrandsMarkup())
+                        .replyMarkup(carActionKeyboardGenerator.getBrandsMarkup(user.getBrandPageNum()))
                         .text(message)
                         .parseMode("HTML")
                         .build();

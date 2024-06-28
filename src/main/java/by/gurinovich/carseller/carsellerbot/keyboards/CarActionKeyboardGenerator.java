@@ -33,8 +33,8 @@ public class CarActionKeyboardGenerator {
         PREVIOUS_BRAND_BUTTON.setCallbackData(CarActions.BRAND_PREVIOUS_BUTTON.name());
     }
 
-    public InlineKeyboardMarkup getBrandsMarkup(){
-        var brands = carBrandService.getAllOrderedByName();
+    public InlineKeyboardMarkup getBrandsMarkup(Long page){
+        var brands = carBrandService.getAllOrderedByName(page);
         var inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         brands.forEach(brand -> {
@@ -48,10 +48,10 @@ public class CarActionKeyboardGenerator {
         return inlineKeyboardMarkup;
     }
 
-    public InlineKeyboardMarkup getModelsMarkup(Long brandId)
+    public InlineKeyboardMarkup getModelsMarkup(Long page, Long brandId)
     {
         var brand = carBrandService.getById(brandId);
-        var models = carModelService.getByBrandOrderedByName(brand);
+        var models = carModelService.getByBrandOrderedByName(page, brand);
         var inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         models.forEach(model -> {

@@ -56,4 +56,8 @@ create table cars(
     vin varchar(255),
     engine_vol varchar(20),
     hp int
-)
+);
+
+--changeset roman_gurinovich:6
+alter table users add column brand_page_num int;
+alter table users add column model_page_num int;

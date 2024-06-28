@@ -34,5 +34,11 @@ public class UserEntity {
     @Column(name = "review_num")
     private Long reviewNum;
 
+    @Column(name = "brand_page_num")
+    private Long brandPageNum;
+
+    @Column(name = "model_page_num")
+    private Long modelPageNum;
+
 
 }

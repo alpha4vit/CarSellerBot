@@ -1,9 +1,11 @@
 package by.gurinovich.carseller.carsellerbot.service.impl;
 
 import by.gurinovich.carseller.carsellerbot.entity.UserEntity;
+import by.gurinovich.carseller.carsellerbot.repository.CarBrandRepository;
 import by.gurinovich.carseller.carsellerbot.repository.ReviewRepository;
 import by.gurinovich.carseller.carsellerbot.repository.UserRepository;
 import by.gurinovich.carseller.carsellerbot.service.UserService;
+import by.gurinovich.carseller.carsellerbot.utils.enums.PageType;
 import by.gurinovich.carseller.carsellerbot.utils.enums.states.BotState;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
+    private final CarBrandRepository carBrandRepository;
 
     @Override
     public UserEntity save(UserEntity userEntity) {
@@ -35,37 +38,64 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    public UserEntity resetActualReviewNum(Long chatId) {
+    public UserEntity resetActualPageNum(Long chatId, PageType pageType) {
         var userEntity = getByChatId(chatId);
-        userEntity.setReviewNum(0L);
-        return userRepository.save(userEntity);
-    }
-
-    @Override
-    @Transactional
-    public UserEntity incActualReviewNum(Long chatId) {
-        var userEntity = getByChatId(chatId);
-        var val = userEntity.getReviewNum() + 1;
-        var reviewCount = reviewRepository.findCount();
-        if (val >= reviewCount)
-            userEntity.setReviewNum(0L);
-        else if (reviewCount > val)
-            userEntity.setReviewNum(val);
-        return userRepository.save(userEntity);
-    }
-
-    @Override
-    @Transactional
-    public UserEntity decActualReviewNum(Long chatId) {
-        var userEntity = getByChatId(chatId);
-        var val = userEntity.getReviewNum() - 1;
-        var reviewCount = reviewRepository.findCount();
-        if (userEntity.getReviewNum() == 0){
-            userEntity.setReviewNum(reviewCount-1);
+        switch (pageType){
+            case REVIEW -> userEntity.setReviewNum(0L);
+            case CAR_BRAND -> userEntity.setBrandPageNum(0L);
+            case CAR_MODEL -> userEntity.setModelPageNum(0L);
+//            case CAR_GENERATION -> userEntity.setG(0L);
         }
-        else if (reviewCount > val)
-            userEntity.setReviewNum(val);
+        return userRepository.save(userEntity);
+    }
+
+    @Override
+    @Transactional
+    public UserEntity incActualPageNum(Long chatId, PageType pageType) {
+        var userEntity = getByChatId(chatId);
+        switch (pageType){
+            case REVIEW -> {
+                var val = userEntity.getReviewNum() + 1;
+                var reviewCount = reviewRepository.findCount();
+                if (val >= reviewCount)
+                    userEntity.setReviewNum(0L);
+                else if (reviewCount > val)
+                    userEntity.setReviewNum(val);
+            }
+            case CAR_BRAND -> {
+                var val = userEntity.getBrandPageNum() + 1;
+                var brandCount = carBrandRepository.findCount();
+                if (val >= brandCount)
+                    userEntity.setBrandPageNum(0L);
+                else if (brandCount > val)
+                    userEntity.setBrandPageNum(val);
+            }
+        }
+        return userRepository.save(userEntity);
+    }
+
+    @Override
+    @Transactional
+    public UserEntity decActualPageNum(Long chatId, PageType pageType) {
+        var userEntity = getByChatId(chatId);
+        switch (pageType){
+            case REVIEW -> {
+                var val = userEntity.getReviewNum() - 1;
+                var reviewCount = reviewRepository.findCount();
+                if (val >= reviewCount)
+                    userEntity.setReviewNum(0L);
+                else if (reviewCount > val)
+                    userEntity.setReviewNum(val);
+            }
+            case CAR_BRAND -> {
+                var val = userEntity.getBrandPageNum() - 1;
+                var brandCount = carBrandRepository.findCount();
+                if (val >= brandCount)
+                    userEntity.setBrandPageNum(0L);
+                else if (brandCount > val)
+                    userEntity.setBrandPageNum(val);
+            }
+        }
         return userRepository.save(userEntity);
     }
 

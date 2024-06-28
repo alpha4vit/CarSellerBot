@@ -6,6 +6,7 @@ import by.gurinovich.carseller.carsellerbot.repository.CarModelRepository;
 import by.gurinovich.carseller.carsellerbot.service.CarModelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,8 @@ public class CarModelServiceImpl implements CarModelService {
     }
 
     @Override
-    public List<CarModelEntity> getByBrandOrderedByName(CarBrandEntity brand) {
-        return carModelRepository.findAllByBrandOrderByName(brand);
+    public List<CarModelEntity> getByBrandOrderedByName(Long page, CarBrandEntity brand) {
+        return carModelRepository.findAllByBrandOrderByName(brand, PageRequest.of(page.intValue(), 3));
     }
 
 }

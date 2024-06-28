@@ -6,6 +6,7 @@ import by.gurinovich.carseller.carsellerbot.keyboards.GlobalActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.keyboards.ReviewActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.service.ReviewService;
 import by.gurinovich.carseller.carsellerbot.service.UserService;
+import by.gurinovich.carseller.carsellerbot.utils.enums.PageType;
 import by.gurinovich.carseller.carsellerbot.utils.enums.ReviewType;
 import by.gurinovich.carseller.carsellerbot.utils.enums.actions.ReviewActions;
 import by.gurinovich.carseller.carsellerbot.utils.enums.states.BotState;
@@ -61,14 +62,14 @@ public class ReviewHandlerImpl implements ReviewHandler {
         var page = 0L;
         switch (ReviewActions.valueOf(callbackQuery.getData())) {
             case REVIEW_GET_BUTTON ->
-                page = userService.resetActualReviewNum(chatId)
+                page = userService.resetActualPageNum(chatId, PageType.REVIEW)
                         .getReviewNum();
             case REVIEW_NEXT_BUTTON ->
-                page = userService.incActualReviewNum(chatId)
+                page = userService.incActualPageNum(chatId, PageType.REVIEW)
                         .getReviewNum();
 
             case REVIEW_PREVIOUS_BUTTON ->
-                page = userService.decActualReviewNum(chatId)
+                page = userService.decActualPageNum(chatId, PageType.REVIEW)
                         .getReviewNum();
 
         }

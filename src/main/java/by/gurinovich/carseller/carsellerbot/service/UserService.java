@@ -1,6 +1,7 @@
 package by.gurinovich.carseller.carsellerbot.service;
 
 import by.gurinovich.carseller.carsellerbot.entity.UserEntity;
+import by.gurinovich.carseller.carsellerbot.utils.enums.PageType;
 import by.gurinovich.carseller.carsellerbot.utils.enums.states.BotState;
 
 public interface UserService {
@@ -10,9 +11,10 @@ public interface UserService {
 
     void updateChatState(Long chatId, BotState state);
 
-    UserEntity resetActualReviewNum(Long chatId);
+    UserEntity resetActualPageNum(Long chatId, PageType pageType);
 
-    UserEntity incActualReviewNum(Long chatId);
+    UserEntity incActualPageNum(Long chatId, PageType pageType);
 
-    UserEntity decActualReviewNum(Long chatId);
+    UserEntity decActualPageNum(Long chatId, PageType pageType);
+
 }
