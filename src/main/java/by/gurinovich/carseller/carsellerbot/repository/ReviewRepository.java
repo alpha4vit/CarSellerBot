@@ -7,9 +7,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<ReviewEntity, Long>,
-        PagingAndSortingRepository<ReviewEntity, Long> {
+public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
 
-    @Query(nativeQuery = true, value = "select count(*) from reviews")
+    @Query(nativeQuery = true, value = "select count(*) from reviews") // TODO refactor dependent on page size
     Long findCount();
 }

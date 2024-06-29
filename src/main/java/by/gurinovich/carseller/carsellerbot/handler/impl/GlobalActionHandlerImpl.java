@@ -6,6 +6,7 @@ import by.gurinovich.carseller.carsellerbot.keyboards.GlobalActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.keyboards.ReviewActionKeyboard;
 import by.gurinovich.carseller.carsellerbot.service.ReviewService;
 import by.gurinovich.carseller.carsellerbot.service.UserService;
+import by.gurinovich.carseller.carsellerbot.utils.enums.PageType;
 import by.gurinovich.carseller.carsellerbot.utils.enums.actions.GlobalActions;
 import by.gurinovich.carseller.carsellerbot.utils.parsers.HTMLParser;
 import lombok.RequiredArgsConstructor;
@@ -48,10 +49,11 @@ public class GlobalActionHandlerImpl implements GlobalActionHandler {
             }
             case GLOBAL_SEARCH -> {
                 var message = htmlParser.readHTML("src/main/resources/static/car/brandTab.html");
+                userService.resetActualPageNum(chatId, PageType.CAR_BRAND);
                 var messageResponse = EditMessageText.builder()
                         .chatId(chatId)
                         .messageId(messageId)
-                        .replyMarkup(carActionKeyboardGenerator.getBrandsMarkup(user.getBrandPageNum()))
+                        .replyMarkup(carActionKeyboardGenerator.getBrandsMarkup(0L))
                         .text(message)
                         .parseMode("HTML")
                         .build();

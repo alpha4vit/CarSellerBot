@@ -13,8 +13,8 @@ public interface UserService {
 
     UserEntity resetActualPageNum(Long chatId, PageType pageType);
 
-    UserEntity incActualPageNum(Long chatId, PageType pageType);
+    UserEntity incActualPageNum(Long chatId, PageType pageType, Long pageCount);
 
-    UserEntity decActualPageNum(Long chatId, PageType pageType);
+    UserEntity decActualPageNum(Long chatId, PageType pageType, Long pageCount);
 
 }

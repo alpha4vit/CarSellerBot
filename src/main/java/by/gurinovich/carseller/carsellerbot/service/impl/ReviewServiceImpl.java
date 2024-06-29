@@ -1,6 +1,7 @@
 package by.gurinovich.carseller.carsellerbot.service.impl;
 
 import by.gurinovich.carseller.carsellerbot.entity.ReviewEntity;
+import by.gurinovich.carseller.carsellerbot.props.BotProperties;
 import by.gurinovich.carseller.carsellerbot.repository.ReviewRepository;
 import by.gurinovich.carseller.carsellerbot.service.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,9 +20,7 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
-
-    @Value("${bot.reviews.page-size}")
-    private int pageSize;
+    private final BotProperties botProperties;
 
     @Override
     public ReviewEntity getById(Long id) {
@@ -41,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Page<ReviewEntity> getByPage(long pageNumber) {
-        return reviewRepository.findAll(PageRequest.of((int) pageNumber, pageSize));
+        return reviewRepository.findAll(PageRequest.of((int) pageNumber, botProperties.getCarPageSize()));
     }
 
     @Override

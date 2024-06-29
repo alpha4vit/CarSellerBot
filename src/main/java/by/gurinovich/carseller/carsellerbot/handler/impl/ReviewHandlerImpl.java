@@ -60,16 +60,17 @@ public class ReviewHandlerImpl implements ReviewHandler {
         var chatId = callbackQuery.getMessage().getChatId();
         var messageId = callbackQuery.getMessage().getMessageId();
         var page = 0L;
+        var pageCount = reviewService.getAllCount();
         switch (ReviewActions.valueOf(callbackQuery.getData())) {
             case REVIEW_GET_BUTTON ->
                 page = userService.resetActualPageNum(chatId, PageType.REVIEW)
                         .getReviewNum();
             case REVIEW_NEXT_BUTTON ->
-                page = userService.incActualPageNum(chatId, PageType.REVIEW)
+                page = userService.incActualPageNum(chatId, PageType.REVIEW, pageCount)
                         .getReviewNum();
 
             case REVIEW_PREVIOUS_BUTTON ->
-                page = userService.decActualPageNum(chatId, PageType.REVIEW)
+                page = userService.decActualPageNum(chatId, PageType.REVIEW, pageCount)
                         .getReviewNum();
 
         }
