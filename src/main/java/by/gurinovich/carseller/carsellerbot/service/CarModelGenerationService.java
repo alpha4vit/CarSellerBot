@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CarModelGenerationService {
     List<CarModelGenerationEntity> getByModelOrderedByName(Long page, CarModelEntity model);
+
+    Long getPagesCountByBrandId(Long modelId);
 }

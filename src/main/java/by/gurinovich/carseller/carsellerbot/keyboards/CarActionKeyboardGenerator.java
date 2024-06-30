@@ -30,6 +30,9 @@ public class CarActionKeyboardGenerator {
     private static final InlineKeyboardButton NEXT_MODEL_BUTTON = new InlineKeyboardButton("➡️");
     private static final InlineKeyboardButton PREVIOUS_MODEL_BUTTON = new InlineKeyboardButton("⬅️");
     private static final InlineKeyboardButton BACK_GENERATION_BUTTON = new InlineKeyboardButton("Назад!");
+    private static final InlineKeyboardButton NEXT_GENERATION_BUTTON = new InlineKeyboardButton("➡️");
+    private static final InlineKeyboardButton PREVIOUS_GENERATION_BUTTON = new InlineKeyboardButton("⬅️");
+
     static {
         BACK_BRAND_BUTTON.setCallbackData(GlobalActions.GLOBAL.name());
         BACK_MODEL_BUTTON.setCallbackData(GlobalActions.GLOBAL_SEARCH.name());
@@ -37,6 +40,8 @@ public class CarActionKeyboardGenerator {
         PREVIOUS_BRAND_BUTTON.setCallbackData(CarActions.CAR_BRAND_PREVIOUS_BUTTON.name());
         NEXT_MODEL_BUTTON.setCallbackData(CarActions.CAR_MODEL_NEXT_BUTTON.name());
         PREVIOUS_MODEL_BUTTON.setCallbackData(CarActions.CAR_MODEL_PREVIOUS_BUTTON.name());
+        NEXT_GENERATION_BUTTON.setCallbackData(CarActions.CAR_GENERATION_NEXT_BUTTON.name());
+        PREVIOUS_GENERATION_BUTTON.setCallbackData(CarActions.CAR_GENERATION_PREVIOUS_BUTTON.name());
     }
 
     public InlineKeyboardMarkup getBrandsMarkup(Long page){
@@ -65,7 +70,7 @@ public class CarActionKeyboardGenerator {
             button.setCallbackData(String.format("CAR_MODEL_%s", model.getId()));
             keyboard.add(List.of(button));
         });
-        keyboard.add(List.of(PREVIOUS_MODEL_BUTTON, NEXT_MODEL_BUTTON   ));
+        keyboard.add(List.of(PREVIOUS_MODEL_BUTTON, NEXT_MODEL_BUTTON));
         keyboard.add(List.of(BACK_MODEL_BUTTON));
         inlineKeyboardMarkup.setKeyboard(keyboard);
         return inlineKeyboardMarkup;
@@ -78,11 +83,13 @@ public class CarActionKeyboardGenerator {
         var inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         generations.forEach(generation -> {
-            var button = new InlineKeyboardButton(model.getName());
-            button.setCallbackData(String.format("CAR_GENERATION_%s", model.getId()));
+            var button = new InlineKeyboardButton(generation.getName());
+            button.setCallbackData(String.format("CAR_GENERATION_%s", generation.getId()));
             keyboard.add(List.of(button));
         });
+        keyboard.add(List.of(PREVIOUS_GENERATION_BUTTON, NEXT_GENERATION_BUTTON));
         keyboard.add(List.of(BACK_GENERATION_BUTTON));
+        BACK_GENERATION_BUTTON.setCallbackData(String.format("CAR_BRAND_%s", model.getBrand().getId()));
         inlineKeyboardMarkup.setKeyboard(keyboard);
         return inlineKeyboardMarkup;
     }

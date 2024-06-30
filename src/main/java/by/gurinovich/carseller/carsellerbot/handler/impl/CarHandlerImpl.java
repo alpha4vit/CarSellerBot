@@ -3,6 +3,7 @@ package by.gurinovich.carseller.carsellerbot.handler.impl;
 import by.gurinovich.carseller.carsellerbot.handler.CarHandler;
 import by.gurinovich.carseller.carsellerbot.keyboards.CarActionKeyboardGenerator;
 import by.gurinovich.carseller.carsellerbot.service.CarBrandService;
+import by.gurinovich.carseller.carsellerbot.service.CarModelGenerationService;
 import by.gurinovich.carseller.carsellerbot.service.CarModelService;
 import by.gurinovich.carseller.carsellerbot.service.UserService;
 import by.gurinovich.carseller.carsellerbot.utils.enums.PageType;
@@ -28,6 +29,7 @@ public class CarHandlerImpl implements CarHandler {
     private final CarBrandService carBrandService;
     private final HTMLParser htmlParser;
     private final CarModelService carModelService;
+    private final CarModelGenerationService carModelGenerationService;
 
     @Override
     @SneakyThrows
@@ -63,7 +65,7 @@ public class CarHandlerImpl implements CarHandler {
                 sender.executeAsync(messageResponse);
             }
             case CAR_MODEL_NEXT_BUTTON -> {
-                var brandId = callbackDataParser.parseBrandIdFromModelMessage(callbackQuery.getMessage().getText());
+                var brandId = callbackDataParser.parseIdFromMessage(callbackQuery.getMessage().getText());
                 var pagesCount = carModelService.getPagesCountByBrandId(brandId);
                 var message = String.format(
                         htmlParser.readHTML("src/main/resources/static/car/modelTab.html"),
@@ -79,7 +81,7 @@ public class CarHandlerImpl implements CarHandler {
                 sender.executeAsync(messageResponse);
             }
             case CAR_MODEL_PREVIOUS_BUTTON -> {
-                var brandId = callbackDataParser.parseBrandIdFromModelMessage(callbackQuery.getMessage().getText());
+                var brandId = callbackDataParser.parseIdFromMessage(callbackQuery.getMessage().getText());
                 var pagesCount = carModelService.getPagesCountByBrandId(brandId);
                 var message = String.format(
                         htmlParser.readHTML("src/main/resources/static/car/modelTab.html"),
@@ -89,6 +91,38 @@ public class CarHandlerImpl implements CarHandler {
                         .chatId(chatId)
                         .messageId(messageId)
                         .replyMarkup(carActionKeyboardGenerator.getModelsMarkup(user.getModelPageNum(), brandId))
+                        .text(message)
+                        .parseMode("HTML")
+                        .build();
+                sender.executeAsync(messageResponse);
+            }
+            case CAR_GENERATION_NEXT_BUTTON -> {
+                var modelId = callbackDataParser.parseIdFromMessage(callbackQuery.getMessage().getText());
+                var pagesCount = carModelGenerationService.getPagesCountByBrandId(modelId);
+                var message = String.format(
+                        htmlParser.readHTML("src/main/resources/static/car/modelTab.html"),
+                        modelId);
+                user = userService.incActualPageNum(chatId, PageType.CAR_GENERATION, pagesCount);
+                var messageResponse = EditMessageText.builder()
+                        .chatId(chatId)
+                        .messageId(messageId)
+                        .replyMarkup(carActionKeyboardGenerator.getGenerationMarkup(user.getModelPageNum(), modelId))
+                        .text(message)
+                        .parseMode("HTML")
+                        .build();
+                sender.executeAsync(messageResponse);
+            }
+            case CAR_GENERATION_PREVIOUS_BUTTON -> {
+                var modelId = callbackDataParser.parseIdFromMessage(callbackQuery.getMessage().getText());
+                var pagesCount = carModelGenerationService.getPagesCountByBrandId(modelId);
+                var message = String.format(
+                        htmlParser.readHTML("src/main/resources/static/car/modelTab.html"),
+                        modelId);
+                user = userService.decActualPageNum(chatId, PageType.CAR_GENERATION, pagesCount);
+                var messageResponse = EditMessageText.builder()
+                        .chatId(chatId)
+                        .messageId(messageId)
+                        .replyMarkup(carActionKeyboardGenerator.getGenerationMarkup(user.getModelPageNum(), modelId))
                         .text(message)
                         .parseMode("HTML")
                         .build();
@@ -112,10 +146,11 @@ public class CarHandlerImpl implements CarHandler {
                     messageResponse.text(messageText);
                 }
                 else if (callbackQuery.getData().startsWith("CAR_MODEL")){
-                    var messageText = htmlParser.readHTML("src/main/resources/static/car/generationTab.html");
+                    var messageText = String.format(htmlParser.readHTML("src/main/resources/static/car/generationTab.html"), itemId);
+                    user = userService.resetActualPageNum(chatId, PageType.CAR_GENERATION);
                     messageResponse.replyMarkup(
                             carActionKeyboardGenerator.getGenerationMarkup(
-                                    user.getModelPageNum(),
+                                    user.getGenerationPageNum(),
                                     itemId
                             ));
                     messageResponse.text(messageText);

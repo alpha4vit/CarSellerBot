@@ -27,8 +27,7 @@ public class CallbackHandlerImpl implements CallbackHandler {
             reviewHandler.handleCallback(sender, callbackQuery);
         else if (callbackQuery.getData().startsWith("GLOBAL"))
             globalActionHandler.handleCallback(sender, callbackQuery);
-        else if (callbackQuery.getData().startsWith("CAR_BRAND")
-                || callbackQuery.getData().startsWith("CAR_MODEL"))
+        else if (callbackQuery.getData().startsWith("CAR"))
             carHandler.handleCallback(sender, callbackQuery);
         return new SendMessage(callbackQuery.getMessage().getChatId().toString(), "callback");
     }

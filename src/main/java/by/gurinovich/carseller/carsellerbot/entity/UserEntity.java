@@ -40,5 +40,7 @@ public class UserEntity {
     @Column(name = "model_page_num")
     private Long modelPageNum;
 
+    @Column(name = "generation_page_num")
+    private Long generationPageNum;
 
 }

@@ -1,10 +1,6 @@
 package by.gurinovich.carseller.carsellerbot.service.impl;
 
 import by.gurinovich.carseller.carsellerbot.entity.UserEntity;
-import by.gurinovich.carseller.carsellerbot.props.BotProperties;
-import by.gurinovich.carseller.carsellerbot.repository.CarBrandRepository;
-import by.gurinovich.carseller.carsellerbot.repository.CarModelRepository;
-import by.gurinovich.carseller.carsellerbot.repository.ReviewRepository;
 import by.gurinovich.carseller.carsellerbot.repository.UserRepository;
 import by.gurinovich.carseller.carsellerbot.service.UserService;
 import by.gurinovich.carseller.carsellerbot.utils.enums.PageType;
@@ -46,7 +42,7 @@ public class UserServiceImpl implements UserService {
             case REVIEW -> userEntity.setReviewNum(0L);
             case CAR_BRAND -> userEntity.setBrandPageNum(0L);
             case CAR_MODEL -> userEntity.setModelPageNum(0L);
-//            case CAR_GENERATION -> userEntity.set(0L);
+            case CAR_GENERATION -> userEntity.setGenerationPageNum(0L);
         }
         return userRepository.save(userEntity);
     }
@@ -77,6 +73,13 @@ public class UserServiceImpl implements UserService {
                 else if (pageCount > val)
                     userEntity.setModelPageNum(val);
             }
+            case CAR_GENERATION -> {
+                var val = userEntity.getGenerationPageNum() + 1;
+                if (val >= pageCount)
+                    userEntity.setGenerationPageNum(0L);
+                else if (pageCount > val)
+                    userEntity.setGenerationPageNum(val);
+            }
         }
         return userRepository.save(userEntity);
     }
@@ -106,6 +109,13 @@ public class UserServiceImpl implements UserService {
                     userEntity.setModelPageNum(pageCount - 1);
                 else if (pageCount > val)
                     userEntity.setModelPageNum(val);
+            }
+            case CAR_GENERATION -> {
+                var val = userEntity.getGenerationPageNum() - 1;
+                if (val < 0)
+                    userEntity.setGenerationPageNum(pageCount -1);
+                else if (pageCount > val)
+                    userEntity.setGenerationPageNum(val);
             }
         }
         return userRepository.save(userEntity);

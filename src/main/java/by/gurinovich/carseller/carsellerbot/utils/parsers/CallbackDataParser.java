@@ -9,7 +9,7 @@ public class CallbackDataParser {
         return Long.parseLong(callbackData.substring(callbackData.lastIndexOf("_")+1));
     }
 
-    public Long parseBrandIdFromModelMessage(String message){
+    public Long parseIdFromMessage(String message){
         return Long.parseLong(message.substring(
                 message.indexOf(" ")+1, message.indexOf(".")
         ));

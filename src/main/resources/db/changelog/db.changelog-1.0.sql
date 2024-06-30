@@ -61,3 +61,6 @@ create table cars(
 --changeset roman_gurinovich:6
 alter table users add column brand_page_num int;
 alter table users add column model_page_num int;
+
+--changeset roman_gurinovich:7
+alter table users add column generation_page_num int;

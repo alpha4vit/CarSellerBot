@@ -26,4 +26,12 @@ public class CarModelGenerationServiceImpl implements CarModelGenerationService 
                 model,
                 PageRequest.of(page.intValue(), botProperties.getCarPageSize()));
     }
+
+    @Override
+    public Long getPagesCountByBrandId(Long modelId) {
+        return carModelGenerationRepository.findPagesCount(
+                botProperties.getCarPageSize(),
+                modelId
+        );
+    }
 }
