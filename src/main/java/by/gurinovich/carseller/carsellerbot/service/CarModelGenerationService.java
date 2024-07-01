@@ -9,4 +9,7 @@ public interface CarModelGenerationService {
     List<CarModelGenerationEntity> getByModelOrderedByName(Long page, CarModelEntity model);
 
     Long getPagesCountByBrandId(Long modelId);
+
+    CarModelGenerationEntity getById(Long id);
+
 }

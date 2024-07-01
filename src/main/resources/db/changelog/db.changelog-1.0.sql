@@ -64,3 +64,16 @@ alter table users add column model_page_num int;
 
 --changeset roman_gurinovich:7
 alter table users add column generation_page_num int;
+
+--changeset roman_gurinovich:8
+alter table users add column car_page int;
+
+--changeset roman_gurinovich:9
+alter table cars add column mileage int;
+alter table cars add column price decimal;
+
+--changeset roman_gurinovich:10
+alter table cars alter column price type int;
+
+
+

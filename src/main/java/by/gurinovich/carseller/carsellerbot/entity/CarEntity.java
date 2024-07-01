@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cars")
@@ -34,5 +36,9 @@ public class CarEntity {
 
     @Column(name = "engine_vol")
     private String engineVol;
+
+    private Integer mileage;
+
+    private Integer price;
 
 }

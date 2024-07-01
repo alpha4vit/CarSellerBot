@@ -18,4 +18,7 @@ public class BotProperties {
     @Value(value = "${bot.cars.page-size}")
     private Integer carPageSize;
 
+    @Value(value = "${bot.cars.lot.page-size}")
+    private Integer carLotPageSize;
+
 }

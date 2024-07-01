@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class CarModelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank
     @Column(name = "model_name")

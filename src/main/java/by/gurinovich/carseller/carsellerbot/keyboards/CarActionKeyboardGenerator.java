@@ -32,6 +32,9 @@ public class CarActionKeyboardGenerator {
     private static final InlineKeyboardButton BACK_GENERATION_BUTTON = new InlineKeyboardButton("Назад!");
     private static final InlineKeyboardButton NEXT_GENERATION_BUTTON = new InlineKeyboardButton("➡️");
     private static final InlineKeyboardButton PREVIOUS_GENERATION_BUTTON = new InlineKeyboardButton("⬅️");
+    private static final InlineKeyboardButton BACK_CAR_LOT_BUTTON = new InlineKeyboardButton("Назад!");
+    private static final InlineKeyboardButton NEXT_CAR_LOT_BUTTON = new InlineKeyboardButton("➡️");
+    private static final InlineKeyboardButton PREVIOUS_CAR_LOT_BUTTON = new InlineKeyboardButton("⬅️");
 
     static {
         BACK_BRAND_BUTTON.setCallbackData(GlobalActions.GLOBAL.name());
@@ -42,6 +45,8 @@ public class CarActionKeyboardGenerator {
         PREVIOUS_MODEL_BUTTON.setCallbackData(CarActions.CAR_MODEL_PREVIOUS_BUTTON.name());
         NEXT_GENERATION_BUTTON.setCallbackData(CarActions.CAR_GENERATION_NEXT_BUTTON.name());
         PREVIOUS_GENERATION_BUTTON.setCallbackData(CarActions.CAR_GENERATION_PREVIOUS_BUTTON.name());
+        NEXT_CAR_LOT_BUTTON.setCallbackData(CarActions.CAR_LOT_NEXT_BUTTON.name());
+        PREVIOUS_CAR_LOT_BUTTON.setCallbackData(CarActions.CAR_LOT_PREVIOUS_BUTTON.name());
     }
 
     public InlineKeyboardMarkup getBrandsMarkup(Long page){
@@ -90,6 +95,17 @@ public class CarActionKeyboardGenerator {
         keyboard.add(List.of(PREVIOUS_GENERATION_BUTTON, NEXT_GENERATION_BUTTON));
         keyboard.add(List.of(BACK_GENERATION_BUTTON));
         BACK_GENERATION_BUTTON.setCallbackData(String.format("CAR_BRAND_%s", model.getBrand().getId()));
+        inlineKeyboardMarkup.setKeyboard(keyboard);
+        return inlineKeyboardMarkup;
+    }
+
+    public InlineKeyboardMarkup getCarLotMarkUp(Long modelId){
+        var inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        var buttons = List.of(PREVIOUS_CAR_LOT_BUTTON, NEXT_CAR_LOT_BUTTON);
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        keyboard.add(buttons);
+        keyboard.add(List.of(BACK_CAR_LOT_BUTTON));
+        BACK_CAR_LOT_BUTTON.setCallbackData(String.format("CAR_MODEL_%s", modelId));
         inlineKeyboardMarkup.setKeyboard(keyboard);
         return inlineKeyboardMarkup;
     }

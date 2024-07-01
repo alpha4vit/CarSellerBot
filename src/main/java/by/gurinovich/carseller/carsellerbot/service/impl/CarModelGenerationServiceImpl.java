@@ -5,6 +5,7 @@ import by.gurinovich.carseller.carsellerbot.entity.CarModelGenerationEntity;
 import by.gurinovich.carseller.carsellerbot.props.BotProperties;
 import by.gurinovich.carseller.carsellerbot.repository.CarModelGenerationRepository;
 import by.gurinovich.carseller.carsellerbot.service.CarModelGenerationService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -33,5 +34,11 @@ public class CarModelGenerationServiceImpl implements CarModelGenerationService 
                 botProperties.getCarPageSize(),
                 modelId
         );
+    }
+
+    @Override
+    public CarModelGenerationEntity getById(Long id) {
+        return carModelGenerationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Car model with this id not found!"));
     }
 }

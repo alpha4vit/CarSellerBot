@@ -43,4 +43,7 @@ public class UserEntity {
     @Column(name = "generation_page_num")
     private Long generationPageNum;
 
+    @Column(name = "car_page")
+    private Long carPage;
+
 }

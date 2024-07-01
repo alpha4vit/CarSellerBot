@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
             case CAR_BRAND -> userEntity.setBrandPageNum(0L);
             case CAR_MODEL -> userEntity.setModelPageNum(0L);
             case CAR_GENERATION -> userEntity.setGenerationPageNum(0L);
+            case CAR -> userEntity.setCarPage(0L);
         }
         return userRepository.save(userEntity);
     }
@@ -80,6 +81,13 @@ public class UserServiceImpl implements UserService {
                 else if (pageCount > val)
                     userEntity.setGenerationPageNum(val);
             }
+            case CAR -> {
+                var val = userEntity.getCarPage() + 1;
+                if (val >= pageCount)
+                    userEntity.setCarPage(0L);
+                else if (pageCount > val)
+                    userEntity.setCarPage(val);
+            }
         }
         return userRepository.save(userEntity);
     }
@@ -116,6 +124,13 @@ public class UserServiceImpl implements UserService {
                     userEntity.setGenerationPageNum(pageCount -1);
                 else if (pageCount > val)
                     userEntity.setGenerationPageNum(val);
+            }
+            case CAR -> {
+                var val = userEntity.getCarPage() - 1;
+                if (val < 0)
+                    userEntity.setCarPage(pageCount -1);
+                else if (pageCount > val)
+                    userEntity.setCarPage(val);
             }
         }
         return userRepository.save(userEntity);
